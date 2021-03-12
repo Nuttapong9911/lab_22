@@ -64,69 +64,27 @@ void List::append(int d){
 }
 
 //Write List::remove() here
-#include<iostream>
-using namespace std;
 
+void List::remove(int idx) {
 
-class Node{
-    public:
-    	int data;
-    	Node *next;
-    	~Node();
-};
+	size--;
 
-class List{
-	public:
-		Node *root;
-		int size;
-		void show();
-		void append(int);
-		void insert(int,int);
-		void remove(int);
-};
+    if(idx == 0){
+		Node *current = root;
+		root = current->next;
+		delete current;
 
-Node::~Node(){
-    cout << data << " was deleted.\n";
-}
-
-void List::insert(int d,int idx){	
-	Node *n = new Node;
-	n->data = d;
-	
-	if(idx == 0){
-		n->next = root;
-		root = n;
 		return;
 	}
+
 	Node *current = root;
 	for(int i = 0; i < idx-1;i++){
 		current = current->next;
 	}
-	n->next = current->next;
-	current->next = n;		
-}
 
-void List::show(){
-	Node *current = root;
-	cout << current->data << " ";	
-	while(current->next){
-		current = current->next;
-		cout << current->data << " ";
-	}	
-}
+	Node *curerntTemp = current->next;
+	current->next = current->next->next;
 
-void List::append(int d){	
-	Node *n = new Node;
-	n->data = d; n->next = NULL;
-	if(root == NULL) root = n;
-	else{
-		Node *current = root;
-		while(current->next){
-			current = current->next;
-		}
-		current->next = n;
-	}
-	size++;
-}
+	delete curerntTemp;
 
-//Write List::remove() here
+}
